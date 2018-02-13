@@ -1,9 +1,9 @@
 *~
-**.log
-**.aux
-**.gz
-**.asv
-**.bbl
-**.blg
-**.sty
+*.log
+*.aux
+*.gz
+*.asv
+*.bbl
+*.blg
+*.sty
 
