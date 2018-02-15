@@ -1,3 +1,5 @@
+# Hopfield module
+
 import numpy as np
 
 def hamming(s1, s2):
@@ -22,7 +24,7 @@ def set_synapse(picts, p, n):
     w = w / n
     return w
 
-def rand_picts(p, n):
+def rand_picts(n, p):
     """Generates p random pictures of length n."""
     picts = np.sign(np.random.rand(n, p) - 0.5)
     return picts
