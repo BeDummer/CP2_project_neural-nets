@@ -5,7 +5,8 @@ import numpy as np
 def hamming(s1, s2):
     """Calculates Hamming distance."""
     comp = s1 != s2
-    return np.sum(comp)
+    d = np.sum(comp)
+    return d
 
 def hamming_sym(s1, s2):
     """Calculates 'symmetric' Hamming distance (min(d, n-d))."""

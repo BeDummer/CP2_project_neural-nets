@@ -8,15 +8,16 @@ N = 100 #number of neurons
 P = np.array([10, 20, 30]) #number of pictures
 CONV_ERROR = 0.1 #definition, when a fixpoint is reached
 MAX_ITER = 1000; #maximum number of iterations (synchronous update)
+np.random.seed()
 
 for i_p in range(len(P)):
     #loop over different numbers of pictures
     picts = hf.rand_picts(N, P[i_p])
-    print(picts)
+    #print(picts)
     w = hf.set_synapse(picts, P[i_p], N)
     errors = np.zeros((P[i_p],2))
     iters = np.zeros((P[i_p],1))
-    print(w)
+    #print(w)
     
     for pic in range(P[i_p]):
         #loop over pictures
