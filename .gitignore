@@ -6,4 +6,7 @@
 *.bbl
 *.blg
 *.sty
+*.kate-swp
+*.pyc
+/src/__pycache__/*
 
