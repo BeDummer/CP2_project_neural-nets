@@ -30,20 +30,37 @@ def rand_picts(n, p):
     picts = np.sign(np.random.rand(n, p) - 0.5)
     return picts
 
-def update(s1, w, async=True):
+def update(s1, w, async=True, beta=False):
     """Updates a signal s asynchronously or synchronously with synapses w."""
-    if async:
+    if beta:
         s2 = s1.copy()
         n = len(s1)
         for i in range(n):
-            cache = np.sign(np.inner(w[i, :], s2))
-            if (cache == 0):
-                cache = -1
-            s2[i] = cache
+            expo = -2.*beta*np.inner(w[i, :], s2)
+            if (expo > 700):
+                prob = 0
+            elif (expo < -700):
+                prob = 1
+            else:
+                prob = 1./(1. + np.exp(expo))
+            if (np.random.rand() < prob):
+                s2[i] = 1
+            else:
+                s2[i] = -1
         return s2
     else:
-        s2 = np.sign(w.dot(s1))
-        return s2
+        if async:
+            s2 = s1.copy()
+            n = len(s1)
+            for i in range(n):
+                cache = np.sign(np.inner(w[i, :], s2))
+                if (cache == 0):
+                    cache = -1
+                s2[i] = cache
+            return s2
+        else:
+            s2 = np.sign(w.dot(s1))
+            return s2
 
 def rand_signal(n):
     """Generates a random signal of length n."""

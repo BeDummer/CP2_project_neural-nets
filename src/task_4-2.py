@@ -10,6 +10,8 @@ CONV_ERROR = 5 #definition, when a picture is reached
 MAX_ITER = 100 #maximum number of iterations (synchronous update)
 CONFIGS = 10 #number of random configurations
 UPDATE_MODE = True #True = asynchronous update, False = synchronous update
+BETA = False #False = no finite temperature implemented, else finite temp. with BETA
+BETA_ITER = 5 #number of iterations with finite temperature
 np.random.seed()
 
 for i_p in range(len(P)):
@@ -22,15 +24,22 @@ for i_p in range(len(P)):
     
     for pic in range(CONFIGS):
         #loop over pictures
+        beta = BETA
         s1 = hf.rand_signal(N)
-        s2 = hf.update(s1, w, UPDATE_MODE)
-        count = 0        
+        s2 = hf.update(s1, w, UPDATE_MODE, beta)
+        count = 1
+#        while beta:
+#            s1 = s2.copy()
+#            s2 = hf.update(s1, w, UPDATE_MODE, beta)
+#            count += 1
+#            if (count == BETA_ITER):
+#                beta=False
 
         while (count < MAX_ITER) and not (np.array_equal(s1, s2)):
             #convergence loop to reach fixpoint
             count += 1
             s1 = s2.copy()
-            s2 = hf.update(s1, w, UPDATE_MODE)
+            s2 = hf.update(s1, w, UPDATE_MODE, beta)
         
         iters[pic] = count
         ispic[pic] = hf.is_pic(s2, picts, CONV_ERROR, True)
@@ -42,3 +51,4 @@ for i_p in range(len(P)):
     print(errors)
     print(iters)
     print(ispic)
+    print("---")

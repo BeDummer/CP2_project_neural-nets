@@ -23,7 +23,7 @@ for i_p in range(len(P)):
         s1 = picts[:, pic].copy()
         s2 = hf.update(s1, w, UPDATE_MODE)
         errors[pic, 0] = hf.hamming(s1, s2) / N
-        count = 0        
+        count = 1       
 
         while (count < MAX_ITER) and not (np.array_equal(s1, s2)):
             #convergence loop to reach fixpoint
