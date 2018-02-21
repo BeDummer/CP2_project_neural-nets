@@ -31,22 +31,23 @@ def rand_picts(n, p):
     return picts
 
 def update(s1, w, async=True, beta=False):
-    """Updates a signal s asynchronously or synchronously with synapses w."""
+    """Updates a signal s asynchronously or synchronously 
+    ... with synapses w."""
     if beta:
         s2 = s1.copy()
         n = len(s1)
         for i in range(n):
             expo = -2.*beta*np.inner(w[i, :], s2)
             if (expo > 700):
-                prob = 0
+                s2[i] = -1 # prob = 0
             elif (expo < -700):
-                prob = 1
+                s2[i] = 1 #prob = 1
             else:
                 prob = 1./(1. + np.exp(expo))
-            if (np.random.rand() < prob):
-                s2[i] = 1
-            else:
-                s2[i] = -1
+                if (np.random.rand() < prob):
+                    s2[i] = 1
+                else:
+                    s2[i] = -1
         return s2
     else:
         if async:
