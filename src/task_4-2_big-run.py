@@ -9,7 +9,7 @@ P = np.array([int(0.1*N), int(0.2*N), int(0.3*N)]) #number of pictures
 CONV_ERROR = int(0.05*N) #definition, when a picture is reached
 MAX_ITER = 100 #maximum number of iterations (synchronous update)
 CONFIGS = 1000 #number of random configurations
-RUNS = 100
+RUNS = 1000
 UPDATE_MODE = True #True = asynchronous update, False = synchronous update
 BETA = 4 #False = no finite temperature implemented, else finite temp. with BETA
 BETA_ITER = 5 #number of iterations with finite temperature
@@ -18,9 +18,9 @@ np.random.seed()
 
 with open(FILENAME,"w") as f:
     f.write("beta beta_iter P sp_state\n")
-for BETA in range(11):
+for BETA in range(20):
     #loop over different betas
-    for BETA_ITER in range(3, 10, 3):
+    for BETA_ITER in range(5, 16, 5):
         #loop over different numbers of iterations with finite temp.
         for i_p in range(len(P)):
             #loop over different numbers of pictures
