@@ -17,22 +17,28 @@ for line in data:
 
 array = array[1:, :]
 sp_state = array[:, 3]
-length = int(len(sp_state) / 9)
+length = int(len(sp_state) / 12)
 beta = np.arange(length)
 count = 0
-P10 = np.zeros(length)
-P20 = np.zeros(length)
-P30 = np.zeros(length)
+#P10 = np.zeros(length)
+#P20 = np.zeros(length)
+#P30 = np.zeros(length)
+P10a = np.zeros(length)
+P10b = np.zeros(length)
+P10c = np.zeros(length)
+P10d = np.zeros(length)
 #for i in range(7, len(sp_state), 9):
 #    P10[count] = sp_state[i-1]
 #    P20[count] = sp_state[i]
 #    P30[count] = sp_state[i+1]
 #    count += 1
-for i in range(3, len(sp_state), 9):
-    P10[count] = sp_state[i-3]
-    P20[count] = sp_state[i]
-    P30[count] = sp_state[i+3]
+for i in range(5, len(sp_state), 12):
+    P10a[count] = sp_state[i-3]
+    P10b[count] = sp_state[i]
+    P10c[count] = sp_state[i+3]
+    P10d[count] = sp_state[i+6]
     count += 1
     
-plt.plot(beta, P10, 'r-*', beta, P20, 'g-*', beta, P30, 'b-*')
+#plt.plot(beta, P10, 'r-*', beta, P20, 'g-*', beta, P30, 'b-*')
+plt.plot(beta, P10a, 'r-*', beta, P10b, 'g-*', beta, P10c, 'b-*', beta, P10d, 'k-*')
 plt.show()
