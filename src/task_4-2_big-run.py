@@ -13,12 +13,12 @@ RUNS = 1000
 UPDATE_MODE = True #True = asynchronous update, False = synchronous update
 BETA = 4 #False = no finite temperature implemented, else finite temp. with BETA
 BETA_ITER = 30 #number of iterations with finite temperature
-FILENAME = "../results/task_4-2_run_N-{0}_CONF-{1}_ERR-{2}_RUNS-{3}_BEIT-{4}_BETA_0-4_ASYNC.txt".format(N, CONFIGS, CONV_ERROR, RUNS, BETA_ITER)
+FILENAME = "../results/task_4-2_run_N-{0}_CONF-{1}_ERR-{2}_RUNS-{3}_BEIT-{4}_BETA_15-20_ASYNC.txt".format(N, CONFIGS, CONV_ERROR, RUNS, BETA_ITER)
 np.random.seed()
 
 with open(FILENAME,"w") as f:
     f.write("beta beta_iter P sp_state\n")
-for BETA in range(5):
+for BETA in range(15, 21):
     #loop over different betas
 #    for BETA_ITER in range(5, 16, 5):
         #loop over different numbers of iterations with finite temp.
