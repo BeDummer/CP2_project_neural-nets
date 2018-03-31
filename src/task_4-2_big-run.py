@@ -1,40 +1,41 @@
 #!/usr/bin/env python3
-# main programm for simulation of Hopfield model: task 4.2
+# main programm for simulation of Hopfield model: task 4.2 (automation)
 
 import numpy as np
 import hopfield_func as hf
 
 N = 100 #number of neurons
-P = np.array([int(0.1*N)])#, int(0.2*N), int(0.3*N)]) #number of pictures
-CONV_ERROR = int(0.05*N) #definition, when a picture is reached
+P = np.array([int(0.1*N), int(0.2*N), int(0.3*N)]) #number of pictures
+CONV_ERROR = int(0.05*N) #procentual definition, when a picture is reached
 MAX_ITER = 100 #maximum number of iterations (synchronous update)
 CONFIGS = 1000 #number of random configurations
-RUNS = 1000
+RUNS = 1000 #number of runs for better statistics with respect to the randomness of the saved pictures
 UPDATE_MODE = True #True = asynchronous update, False = synchronous update
-BETA = 4 #False = no finite temperature implemented, else finite temp. with BETA
+BETA = 4 #False = no finite temperature implemented => 0 means Infinity, else finite temp. with BETA
 BETA_ITER = 100 #number of iterations with finite temperature
-FILENAME = "../results/task_4-2_run_N-{0}_CONF-{1}_ERR-{2}_RUNS-{3}_BEIT-{4}_BETA_15-20_ASYNC.txt".format(N, CONFIGS, CONV_ERROR, RUNS, BETA_ITER)
+FILENAME = "../results/task_4-2_run_N-{0}_CONF-{1}_ERR-{2}_RUNS-{3}_BEIT-{4}_BETA_0-20_ASYNC.txt".format(N, CONFIGS, CONV_ERROR, RUNS, BETA_ITER)
 np.random.seed()
 
 with open(FILENAME,"w") as f:
     f.write("beta beta_iter P sp_state\n")
-for BETA in range(15, 21):
+for BETA in range(0, 21):
     #loop over different betas
-#    for BETA_ITER in range(5, 16, 5):
+    for BETA_ITER in range(5, 16, 5):
         #loop over different numbers of iterations with finite temp.
     for i_p in range(len(P)):
-        #loop over different numbers of pictures
-        sp_state = 0
+        #loop over different numbers of saved pictures
+        sp_state = 0 #count for spurious states
+        
         for run in range(RUNS):
             picts = hf.rand_picts(N, P[i_p])
             w = hf.set_synapse(picts, P[i_p], N)
             
             for pic in range(CONFIGS):
-                #loop over pictures
+            #loop over random start pictures/configurations
                 beta = BETA
                 s1 = hf.rand_signal(N)
                 s2 = hf.update(s1, w, UPDATE_MODE, beta)
-                count = 1
+                count = 1 #count for number of iterations
                 while beta:
                     s1 = s2.copy()
                     s2 = hf.update(s1, w, UPDATE_MODE, beta)

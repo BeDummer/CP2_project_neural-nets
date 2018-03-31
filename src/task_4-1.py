@@ -7,7 +7,7 @@ import hopfield_func as hf
 N = 100 #number of neurons
 P = np.array([10, 20, 30]) #number of pictures
 MAX_ITER = 100; #maximum number of iterations (synchronous update)
-UPDATE_MODE = True #True = asynchronous update, False = synchronous update
+UPDATE_MODE = False #True = asynchronous update, False = synchronous update
 np.random.seed()
 
 for i_p in range(len(P)):
@@ -22,8 +22,8 @@ for i_p in range(len(P)):
         #loop over pictures
         s1 = picts[:, pic].copy()
         s2 = hf.update(s1, w, UPDATE_MODE)
-        errors[pic, 0] = hf.hamming(s1, s2) / N
-        count = 1       
+        errors[pic, 0] = hf.hamming(s1, s2) / N #error after 1 iteration
+        count = 1 #count for number of iterations
 
         while (count < MAX_ITER) and not (np.array_equal(s1, s2)):
             #convergence loop to reach fixpoint
@@ -31,10 +31,17 @@ for i_p in range(len(P)):
             s1 = s2.copy()
             s2 = hf.update(s1, w, UPDATE_MODE)
         
-        errors[pic, 1] = hf.hamming(picts[:, pic], s2) / N
+        errors[pic, 1] = hf.hamming(picts[:, pic], s2) / N #error after convergence
         iters[pic] = count
         ispic[pic] = hf.is_pic(s2, picts)
     
+    print("P = {0}\n".format(P[i_p]))
     print(errors)
     print(iters)
     print(ispic)
+    print("---")
+
+if (UPDATE_MODE):
+    print("Update-Mode: Asynchronous")
+else:
+    print("Update-Mode: Synchronous")
